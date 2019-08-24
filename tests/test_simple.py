@@ -9,11 +9,11 @@ def test_yaml():
     s = """
     ciao: ok
     other: 
-        key: ${
+        key: ${{
                 str(
                     'sdfsdf"sdfsdf'
                 )
-            }
+            }}
         another:
             obj:
                 ciao: 4
@@ -23,8 +23,8 @@ def test_yaml():
 def test_python():
     s = """
 class Ciao:
-    def ${cosa}():
-        return ${ret}
+    def ${{cosa}}():
+        return ${{ret}}
     """
     x = populate_string(s, dict(cosa='func', ret='True'))
     print(x)

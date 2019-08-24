@@ -11,8 +11,8 @@ import json
 import datetime
 
 
-INDICATOR_START = '${'
-INDICATOR_END = '}'
+INDICATOR_START = '${{'
+INDICATOR_END = '}}'
 
 def populate_string(yaml_string, data={}, do_repr=False):
     """
