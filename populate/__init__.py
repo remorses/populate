@@ -33,26 +33,25 @@ def populate_string(yaml_string, data={}, do_repr=False):
                 'json':json
             })
         except Exception as e:
-            # print(f'error `{e}` in xeval for expression "{expr}"')
+            print(f'error `{e}` in xeval for expression "{expr}"')
             raise e from None
             
     def replace_in_line(line):
-        if INDICATOR_START in line and INDICATOR_END in line and not ('#' in line and line.index('#') < line.index(INDICATOR_START)): 
+        while INDICATOR_START in line and INDICATOR_END in line and not ('#' in line and line.index('#') < line.index(INDICATOR_START)): 
             begin = line.index(INDICATOR_START)
             end = line.index(INDICATOR_END, begin)
             variable_name = line[begin:end].strip().replace(INDICATOR_START,'').replace(INDICATOR_END,'').strip()
             try:
                 value = xeval(variable_name, data)
-                return (
-                    line[:begin].replace(INDICATOR_START,'').replace(INDICATOR_END,'') +
+                line = (
+                    line[:begin] +
                     # value if isinstance(value, (int, float)) else repr(value) +
-                    (repr(value) if do_repr else value) +
-                    line[end:].replace(INDICATOR_END,'').replace(INDICATOR_START,'')
+                    (repr(value) if do_repr else str(value)) +
+                    line[end + len(INDICATOR_END):]
                 )
-            except Exception:
-                raise Exception('yaml file needs all data to be evaluated: {{{{ {} }}}}'.format(variable_name))
-        else:
-            return line
+            except Exception as e:
+                raise Exception('yaml file needs all data to be evaluated: {{{{ {} }}}}\n {}'.format(variable_name, e))
+        return line
     def replace_multiline(string):
         result = ''
         parts = string.split(INDICATOR_START)
