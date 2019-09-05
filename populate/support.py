@@ -46,7 +46,7 @@ join_yields = lambda separator='': post_processing(lambda parts: separator.join(
 
 def remove_indentation(string: str):
     lines = string.split('\n')
-    # lines = map(lambda x: x.replace(' ', ''), lines)
+    lines = lfilter(bool, lines)
     indents = [len(line) - len(line.lstrip()) for line in lines]
     base_indent = min(indents) if indents else 0
     lines = [x[base_indent:] for x in lines]
