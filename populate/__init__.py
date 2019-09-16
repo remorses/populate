@@ -5,7 +5,7 @@ from .logger import logger
 import os
 import operator
 import random
-from .support import merge, dotdict, indent_to
+from .support import merge, dotdict, indent_to, render_dict
 import funcy
 import json
 import datetime

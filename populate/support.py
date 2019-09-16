@@ -91,6 +91,13 @@ def repr_eval_dict(obj, indentation=''):
     return dumped.lstrip()
 
 
+def render_dict(obj, indentation=""):
+    dumped = json.dumps(obj, indent=4)
+    dumped = indent_to(indentation, dumped)
+    dumped = dumped.replace(': false', ': False')
+    dumped = dumped.replace(': true', ': True')
+    dumped = dumped.replace(': null', ': None')
+    return dumped.lstrip()
 
 if __name__ == '__main__':
     join_yields()
